@@ -50,7 +50,7 @@ jobs:
       push: true
       tags: d4v1d007/demo-workflow:latest
   deploy-to-vm:
-   needs: build-and-push
+   needs: build
    runs-on: ubuntu-latest
    steps:
    - name: Deploy over SSH
