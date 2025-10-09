@@ -46,6 +46,6 @@ jobs:
     -
      name: Build and push
      uses: docker/build-push-action@v6
-      with:
-       push: true
-       tags: d4v1d007/demo-workflow:latest
+     with:
+      push: true
+      tags: d4v1d007/demo-workflow:latest
