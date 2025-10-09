@@ -49,3 +49,20 @@ jobs:
      with:
       push: true
       tags: d4v1d007/demo-workflow:latest
+      
+deploy-to-vm:
+  needs: build-and-push
+  runs-on: ubuntu-latest
+  steps:
+  - name: Deploy over SSH
+    uses: appleboy/ssh-action@v1.0.0
+    with:
+     host: ${{ secrets.VM_HOST }}
+     username: ${{ secrets.VM_USER }}
+     key: ${{ secrets.VM_SSH_KEY }}
+     script: |
+      docker pull $REGISTRY/${{ env.DOCKER_IMAGE_NAME }}:latest
+      docker stop $CONTAINER_NAME || true
+      docker rm $CONTAINER_NAME || true
+      docker run -d --name $CONTAINER_NAME -p 80:80 $REGISTRY/${{ env.DOCKER_IMAGE_NAME
+      }}:latest
